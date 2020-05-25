@@ -9,7 +9,7 @@ def display_data(to_display):
 def get_data(location):
     response = requests.get(location)
     if response.status_code != 200:
-        return dict()
+        return []
     data = response.json()
     return data['results']
 
