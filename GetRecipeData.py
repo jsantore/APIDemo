@@ -1,17 +1,23 @@
 import requests
 
+
 def display_data(to_display):
-    pass
+    for recipe in to_display:
+        print(recipe['title'])
 
 
 def get_data(location):
-    pass
+    response = requests.get(location)
+    if response.status_code != 200:
+        return dict()
+    data = response.json()
+    return data['results']
 
 
 def get_params():
     ingredients = input("what ingredients shall we include? (comma separated)")
     recipe_type = input("What kind of recipe shall we look for:")
-    return (ingredients, recipe_type)
+    return ingredients, recipe_type
 
 
 def main():
