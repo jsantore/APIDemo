@@ -1,6 +1,6 @@
 import requests
 
-def display_data():
+def display_data(to_display):
     pass
 
 
@@ -9,7 +9,8 @@ def get_data():
 
 
 def main():
-    pass
+    data = get_data()
+    display_data(data)
 
 
 if __name__ == '__main__':
