@@ -17,7 +17,7 @@ def get_data(location):
 def save_data(recipes:list, cursor:sqlite3.Cursor):
     for recipe in recipes:
         cursor.execute("INSERT INTO recipes(title, web_address, ingredients) VALUES (?,?,?);",
-                       (recipe['title'], recipe['href'], recipe['ingredients'])) 
+                       (recipe['title'], recipe['href'], recipe['ingredients']))
 
 
 def setup_database(cursor:sqlite3.Cursor):
