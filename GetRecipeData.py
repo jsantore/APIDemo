@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QListWidget
 from PyQt5 import QtWidgets
 import sys
+import time
 
 class RecipeWindow(QWidget):
     def __init__(self, to_display):
@@ -80,13 +81,20 @@ def get_params():
 
 def main():
     app = QApplication(sys.argv)
-    params = get_params()
-    loc = f"http://www.recipepuppy.com/api/?i={params[0]}&q={params[1]}"
-    print(loc)
+    data = []
+    # params = get_params()
+    inglists = ["onions", "peppers", "chicken", "tofu", "squirrel", "mushrooms", "cheese", "eggs"]
+    dishes = ["burger", "pasta", "casserole", "soup", "pizza"]
+    for ingredient in inglists:
+        for dish_type in dishes:
+            loc = f"http://www.recipepuppy.com/api/?i={ingredient}&q={dish_type}"
+            print(loc)
+            data.extend(get_data(loc))
+            time.sleep(.5)
+
     connection = sqlite3.connect("recipes.db")
     cursor = connection.cursor()
     setup_database(cursor)
-    data = get_data(loc)
     save_data(data, cursor)
     connection.commit()
     connection.close()
