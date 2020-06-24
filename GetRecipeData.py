@@ -5,10 +5,10 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QListWidget
 from PyQt5 import QtWidgets
 import sys
 import time
+
 
 class RecipeWindow(QWidget):
     def __init__(self, to_display):
@@ -35,20 +35,16 @@ class RecipeWindow(QWidget):
         get_next.pressed.connect(self.show_next_recipe)
 
     def show_next_recipe(self):
-        self.data_item_displayed += 1;
+        self.data_item_displayed += 1
         # what could possibly go wrong!??!
         current_data = self.data_to_display[self.data_item_displayed]
         self.title_display.setText(current_data['title'])
         self.ing_display.setText(current_data['ingredients'])
 
 
-
-
-
-
 def display_data(to_display):
-   window = RecipeWindow(to_display)
-   return window
+    window = RecipeWindow(to_display)
+    return window
 
 
 def get_data(location):
@@ -59,19 +55,20 @@ def get_data(location):
     return data['results']
 
 
-def save_data(recipes:list, cursor:sqlite3.Cursor):
+def save_data(recipes: list, cursor: sqlite3.Cursor):
     for recipe in recipes:
         cursor.execute("INSERT INTO recipes(title, web_address, ingredients) VALUES (?,?,?);",
                        (recipe['title'], recipe['href'], recipe['ingredients']))
 
 
-def setup_database(cursor:sqlite3.Cursor):
+def setup_database(cursor: sqlite3.Cursor):
     create_statement = """CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY  AUTOINCREMENT,
     title TEXT,
     web_address TEXT,
     ingredients TEXT);"""
     cursor.execute(create_statement)
+
 
 def get_params():
     ingredients = input("what ingredients shall we include? (comma separated)")
